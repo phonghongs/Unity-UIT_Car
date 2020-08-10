@@ -33,11 +33,17 @@ git clone https://github.com/phonghongs/Unity-UIT_Car.git
 Sau khi cài đặt các thư viện cần thiết và có code giao tiếp vừa clone từ link git ở trên, ta bắt đầu vào chi tiết code
 
 Cấu trúc Folder:    Code test Simulation|
+
                         --------------------|My code|
+
                                                 -------|drive.py
+
                                                 -------|model-010.h5
+
                                                 -------|utils.py
+
                         --------------------|Raw code|
+                        
                                                 -------|raw_code.py
 
 * My code: là folder chưa code mẫu của btc làm ví dụ cho các bạn biết cách sử dụng của code và làm sao để giao tiếp với phần mềm mô phỏng
