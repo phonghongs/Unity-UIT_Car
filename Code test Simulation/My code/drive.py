@@ -15,8 +15,6 @@ import utils
 
 #--------------------------------------#
 
-takeDepth = False      #Có lấy ảnh depth về ko ?
-
 #Global variable
 MAX_SPEED = 30
 MAX_ANGLE = 25
@@ -40,26 +38,14 @@ def telemetry(sid, data):
         steering_angle = 0  #Góc lái hiện tại của xe
         speed = 0           #Vận tốc hiện tại của xe
         image = 0           #Ảnh gốc
-        depth_image = 0     #Ảnh Depth
 
 
-        if takeDepth:
-            steering_angle = float(data["steering_angle"])
-            speed = float(data["speed"])
-            #Original Image
-            image = Image.open(BytesIO(base64.b64decode(data["image"])))
-            image = np.asarray(image)
-            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-            #DepthImage 
-            depth_image = Image.open(BytesIO(base64.b64decode(data["depth_image"])))   
-            depth_image = np.asarray(depth_image) 
-        else:
-            steering_angle = float(data["steering_angle"])
-            speed = float(data["speed"])
-            #Original Image
-            image = Image.open(BytesIO(base64.b64decode(data["image"])))
-            image = np.asarray(image)
-            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        steering_angle = float(data["steering_angle"])
+        speed = float(data["speed"])
+        #Original Image
+        image = Image.open(BytesIO(base64.b64decode(data["image"])))
+        image = np.asarray(image)
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         
         """
         - Chương trình đưa cho bạn 3 giá trị đầu vào:
@@ -97,15 +83,11 @@ def telemetry(sid, data):
             sendBack_angle = steering_angle*MAX_ANGLE
             sendBack_Speed = throttle*MAX_SPEED
 
-            #if takeDepth:
-              #  cv2.imshow("depth_image", depth_image)
-            #cv2.imshow("Original", image)
-
             cv2.waitKey(1)
 
             #------------------------------------------------------------------------------------------------------#
             print('{} : {}'.format(sendBack_angle, sendBack_Speed))
-            send_control(sendBack_angle, sendBack_Speed, takeDepth)
+            send_control(sendBack_angle, sendBack_Speed)
         except Exception as e:
             print(e)
     else:
@@ -114,16 +96,15 @@ def telemetry(sid, data):
 @sio.on('connect')
 def connect(sid, environ):
     print("connect ", sid)
-    send_control(0, 0, takeDepth)
+    send_control(0, 0)
 
 
-def send_control(steering_angle, throttle, takeDepth):
+def send_control(steering_angle, throttle):
     sio.emit(
         "steer",
         data={
             'steering_angle': steering_angle.__str__(),
             'throttle': throttle.__str__(),
-            'takeDepth': takeDepth.__str__()
         },
         skip_sid=True)
 
