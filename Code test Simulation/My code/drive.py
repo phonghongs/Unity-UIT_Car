@@ -15,9 +15,16 @@ import utils
 
 #--------------------------------------#
 
+IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 1
+INPUT_SHAPE = (IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
+
+MAX_ANGLE = 45
+IMAGE_SHAPE = (640, 360)
+
+
 #Global variable
-MAX_SPEED = 30
-MAX_ANGLE = 25
+MAX_SPEED = 80
+MAX_ANGLE = 35
 # Tốc độ thời điểm ban đầu
 speed_limit = MAX_SPEED
 MIN_SPEED = 10
@@ -65,11 +72,16 @@ def telemetry(sid, data):
         try:
             #------------------------------------------  Work space  ----------------------------------------------#
             
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            image = utils.preprocess(image)
-            image = np.array([image])
+            # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            cv2.imshow("imagesBeforeProcess", image)
 
-            steering_angle = float(model.predict(image, batch_size=1))
+            image = utils.preprocess(image)
+            afterProcess = np.reshape(image, INPUT_SHAPE)
+            cv2.imshow("imagesAfterProcess", afterProcess)
+
+            afterProcess = np.array([afterProcess])
+
+            steering_angle = float(model.predict(afterProcess, batch_size=1))
 
             # Tốc độ ta để trong khoảng từ 10 đến 25
             global speed_limit
