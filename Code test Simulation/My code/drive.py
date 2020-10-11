@@ -15,19 +15,19 @@ import utils
 
 #--------------------------------------#
 
-IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 1
-INPUT_SHAPE = (IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
+# IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 3
+# INPUT_SHAPE = (IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
 
-MAX_ANGLE = 45
-IMAGE_SHAPE = (640, 360)
+# MAX_ANGLE = 45
+# IMAGE_SHAPE = (640, 360)
 
 
 #Global variable
 MAX_SPEED = 80
-MAX_ANGLE = 35
+MAX_ANGLE = 20
 # Tốc độ thời điểm ban đầu
 speed_limit = MAX_SPEED
-MIN_SPEED = 10
+MIN_SPEED = 45
 
 #init our model and image array as empty
 model = None
@@ -53,6 +53,11 @@ def telemetry(sid, data):
         image = Image.open(BytesIO(base64.b64decode(data["image"])))
         image = np.asarray(image)
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        # def random_brightness(image,value=30):
+        """
+    Thêm giá trị sáng cho ảnh.
+    """
+    # HSV (Hue, Saturation, Value) is also called HSB ('B' for Brightness).
         
         """
         - Chương trình đưa cho bạn 3 giá trị đầu vào:
@@ -73,23 +78,30 @@ def telemetry(sid, data):
             #------------------------------------------  Work space  ----------------------------------------------#
             
             # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            cv2.imshow("imagesBeforeProcess", image)
-
+            # cv2.imshow("imagesBeforeProcess", image)
+            # image = cv2.bilateralFilter(image,9,75,75)
             image = utils.preprocess(image)
-            afterProcess = np.reshape(image, INPUT_SHAPE)
-            cv2.imshow("imagesAfterProcess", afterProcess)
+            # afterProcess = np.reshape(image, INPUT_SHAPE)
+            # cv2.imshow("imagesAfterProcess", image)
 
-            afterProcess = np.array([afterProcess])
+            afterProcess = np.array([image])
 
             steering_angle = float(model.predict(afterProcess, batch_size=1))
-
+            # print("...")
+            # print(steering_angle)
             # Tốc độ ta để trong khoảng từ 10 đến 25
+            
             global speed_limit
             if speed > speed_limit:
                 speed_limit = MIN_SPEED  # giảm tốc độ
             else:
                 speed_limit = MAX_SPEED
-            throttle = 1.0 - steering_angle**2 - (speed/speed_limit)**2
+            if abs(steering_angle)>0.4:
+                throttle = 1.0 - (0.5+abs(steering_angle))**2 - (speed/speed_limit)**2
+                MAX_ANGLE=35
+            else:
+                throttle = 1.0 - (abs(steering_angle))**2 - (speed/speed_limit)**2
+                MAX_ANGLE=20
 
 
             sendBack_angle = steering_angle*MAX_ANGLE
@@ -98,7 +110,7 @@ def telemetry(sid, data):
             cv2.waitKey(1)
 
             #------------------------------------------------------------------------------------------------------#
-            print('{} : {}'.format(sendBack_angle, sendBack_Speed))
+            # print('{} : {}'.format(sendBack_angle, sendBack_Speed))
             send_control(sendBack_angle, sendBack_Speed)
         except Exception as e:
             print(e)
@@ -138,10 +150,10 @@ if __name__ == '__main__':
         default='',
         help='Path to image folder. This is where the images from the run will be saved.'
     )
-    args = parser.parse_args()
+    # args = parser.parse_args()
 
     # Load model mà ta đã train được từ bước trước
-    model = load_model(args.model)
+    model = load_model("model.h5")
 
     #--------------------------------------------------------------------------------------#
     # wrap Flask application with engineio's middleware

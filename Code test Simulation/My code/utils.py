@@ -5,7 +5,6 @@ import math
 IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 1
 INPUT_SHAPE = (IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
 
-MAX_ANGLE = 45
 IMAGE_SHAPE = (640, 360)
 
 
@@ -48,8 +47,8 @@ def dir_threshold(image, sobel_kernel=3, thresh=(0, np.pi/2)):
 def apply_thresholds(image, ksize=5):
     gradx = abs_sobel_thresh(image, orient='x', sobel_kernel=ksize, thresh=(20, 100))
     grady = abs_sobel_thresh(image, orient='y', sobel_kernel=ksize, thresh=(20, 100))
-    mag_binary = mag_thresh(image, sobel_kernel=ksize, mag_thresh=(30, 100))
-    dir_binary = dir_threshold(image, sobel_kernel=ksize, thresh=(0.7, 1.3))
+    mag_binary = mag_thresh(image, sobel_kernel=ksize, mag_thresh=(30, 80))
+    dir_binary = dir_threshold(image, sobel_kernel=ksize, thresh=(0.7, 1.2))
 
     combined = np.zeros_like(dir_binary)
     combined[((gradx == 1) & (grady == 1)) | ((mag_binary == 1) & (dir_binary == 1))] = 1
@@ -109,7 +108,7 @@ def crop(image):
     """
     Cắt bỏ bầu trời và mũi xe trong ảnh
     """
-    return image[100:, :]
+    return image[100:190, :]
 
 
 def resize(image):
@@ -124,7 +123,11 @@ def preprocess(image):
     """
     Pre-process ảnh
     """
+    
     image = new_process(image)
     image = crop(image)
+    
     image = resize(image)
-    return image
+    
+    
+    return image.reshape(INPUT_SHAPE)
