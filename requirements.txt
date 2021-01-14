@@ -1,0 +1,3 @@
+pip install eventlet
+pip install python_socketio
+pip install flask
