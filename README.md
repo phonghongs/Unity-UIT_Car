@@ -17,22 +17,22 @@ Các bạn tải map về và giải nén sẽ thu đc 2 folder:
 ## Phần mềm mô phỏng cuộc thi UIT CAR RACING sử dụng phương thức giao tiếp Socket-Io 
 ## Để giao tiếp với phần mềm mô phỏng btc sử dụng ngôn ngữ Python (Đối với các đội sử dụng ngôn ngữ khác để giao tiếp với phần mềm mô phỏng, btc không có trách nhiệm hỗ trợ)
 
-* [python-socketio](https://pypi.org/project/python-socketio/)
-* [flask](https://pypi.org/project/Flask/)
-* [OpenCv](https://opencv.org/)
-* [eventlet](https://pypi.org/project/eventlet/)
-* [Pillow](https://pypi.org/project/Pillow/)
-* Code giao tiếp với phần mềm mô phỏng: 
+Để đảm bảo tránh xung đột với môi trường chung của hệ thống, các bạn có thể tạo môi trường mới python 3.7 (mình sử dụng Anaconda) để chạy các lệnh sau nhé.
 
+* python 3.7
 ```
 git clone https://github.com/phonghongs/Unity-UIT_Car.git
+cd /Unity-UIT_Car
+pip install -r requirements.txt
 ```
+
 
 # Hướng dẫn sử dụng
 
 Sau khi cài đặt các thư viện cần thiết và có code giao tiếp vừa clone từ link git ở trên, ta bắt đầu vào chi tiết code
 
-Cấu trúc Folder:    Code test Simulation|
+Cấu trúc Folder:    
+                    Code test Simulation|
 
                         --------------------|My code|
 
@@ -48,10 +48,15 @@ Cấu trúc Folder:    Code test Simulation|
 
 * My code: là folder chưa code mẫu của btc làm ví dụ cho các bạn biết cách sử dụng của code và làm sao để giao tiếp với phần mềm mô phỏng
 ```
-python driver.py model-010.h5
+python driver.py model.h5
 ```
 
-* Raw code: Code này chứa mẫu giao tiếp với phần mềm mô phỏng, các đội nên code vào những phần mà đã gợi ý dưới đây
+* Raw code: 
+```
+python raw_code.py
+```
+    
+Code này chứa mẫu giao tiếp với phần mềm mô phỏng, các đội nên code vào những phần mà đã gợi ý dưới đây
     + Phần "Add library": Nếu các bạn sử dụng thêm những thư viện khác thì có thể import từ phần này
 
     + Phần "Work space": Phần này sẽ chưa code xử lý chính của thí sinh, chương trình sẽ trả về những biến dưới đây sau mỗi lần request tới phần mềm mô phòng:

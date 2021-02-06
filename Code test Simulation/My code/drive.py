@@ -15,13 +15,6 @@ import utils
 
 #--------------------------------------#
 
-# IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 3
-# INPUT_SHAPE = (IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
-
-# MAX_ANGLE = 45
-# IMAGE_SHAPE = (640, 360)
-
-
 #Global variable
 MAX_SPEED = 80
 MAX_ANGLE = 20
@@ -143,17 +136,11 @@ if __name__ == '__main__':
         type=str,
         help='Path to model h5 file. Model should be on the same path.'
     )
-    parser.add_argument(
-        'image_folder',
-        type=str,
-        nargs='?',
-        default='',
-        help='Path to image folder. This is where the images from the run will be saved.'
-    )
-    # args = parser.parse_args()
+
+    args = parser.parse_args()
 
     # Load model mà ta đã train được từ bước trước
-    model = load_model("model.h5")
+    model = load_model(args.model)
 
     #--------------------------------------------------------------------------------------#
     # wrap Flask application with engineio's middleware

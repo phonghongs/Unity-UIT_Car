@@ -50,12 +50,13 @@ def telemetry(sid, data):
         """
         sendBack_angle = 0
         sendBack_Speed = 0
+        print("ok")
         try:
             #------------------------------------------  Work space  ----------------------------------------------#
             
 
             cv2.imshow("result", image)
-
+            print("ok")
             cv2.waitKey(1)
             #------------------------------------------------------------------------------------------------------#
             print('{} : {}'.format(sendBack_angle, sendBack_Speed))
