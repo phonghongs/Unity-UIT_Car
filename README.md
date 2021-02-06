@@ -6,6 +6,7 @@ Thông tin cuộc thi: [here](http://ceday.uit.edu.vn/ceday/uit-car-racing-2020/
 # Cài đặt phần mềm mô phỏng
 
 Link tải map: [here](https://drive.google.com/drive/folders/1dxIH1mCjbuDAfMuaFIBFVka7kUac-_ce?usp=sharing)
+
 Link hướng dẫn: [here](https://youtu.be/dt8Rj01CxDo?list=PLdDI53OVr0EMUM9bDmiXnFKN1IFDcnI9H) (video này đã cũ, nhưng xem để biết cấu trúc template)
 
 Các bạn tải map về và giải nén sẽ thu đc 2 folder:
