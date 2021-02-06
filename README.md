@@ -6,6 +6,7 @@ Thông tin cuộc thi: [here](http://ceday.uit.edu.vn/ceday/uit-car-racing-2020/
 # Cài đặt phần mềm mô phỏng
 
 Link tải map: [here](https://drive.google.com/drive/folders/1dxIH1mCjbuDAfMuaFIBFVka7kUac-_ce?usp=sharing)
+Link hướng dẫn: [here](https://youtu.be/dt8Rj01CxDo?list=PLdDI53OVr0EMUM9bDmiXnFKN1IFDcnI9H) (video này đã cũ, nhưng xem để biết cấu trúc template)
 
 Các bạn tải map về và giải nén sẽ thu đc 2 folder:
 * Folder Windows: dùng cho các bạn sử dụng nền tảng window, chạy file [tên map].exe (vd: 3D_MAP1-V2.exe)
@@ -14,8 +15,8 @@ Các bạn tải map về và giải nén sẽ thu đc 2 folder:
 
 # Cài đặt các thư viện bắt buộc - Python
 
-## Phần mềm mô phỏng cuộc thi UIT CAR RACING sử dụng phương thức giao tiếp Socket-Io 
-## Để giao tiếp với phần mềm mô phỏng btc sử dụng ngôn ngữ Python (Đối với các đội sử dụng ngôn ngữ khác để giao tiếp với phần mềm mô phỏng, btc không có trách nhiệm hỗ trợ)
+### Phần mềm mô phỏng cuộc thi UIT CAR RACING sử dụng phương thức giao tiếp Socket-Io 
+### Để giao tiếp với phần mềm mô phỏng btc sử dụng ngôn ngữ Python (Đối với các đội sử dụng ngôn ngữ khác để giao tiếp với phần mềm mô phỏng, btc không có trách nhiệm hỗ trợ)
 
 Để đảm bảo tránh xung đột với môi trường chung của hệ thống, các bạn có thể tạo môi trường mới python 3.7 (mình sử dụng Anaconda) để chạy các lệnh sau nhé.
 
@@ -31,14 +32,13 @@ pip install -r requirements.txt
 
 Sau khi cài đặt các thư viện cần thiết và có code giao tiếp vừa clone từ link git ở trên, ta bắt đầu vào chi tiết code
 
-Cấu trúc Folder:    
-                    Code test Simulation|
+Cấu trúc Folder:    Code test Simulation|
 
                         --------------------|My code|
 
                                                 -------|drive.py
 
-                                                -------|model-010.h5
+                                                -------|model.h5
 
                                                 -------|utils.py
 
