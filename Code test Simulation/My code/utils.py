@@ -123,12 +123,8 @@ def preprocess(image):
     """
     Pre-process ảnh
     """
-    print("ok")
     image = new_process(image)
-    print("ok 1")
     image = crop(image)
-    print("ok 2")
     image = resize(image)
-    print("ok 3")
     
     return image.reshape(INPUT_SHAPE)
