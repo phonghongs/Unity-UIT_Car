@@ -4,16 +4,24 @@ import socketio
 import eventlet
 import eventlet.wsgi
 import cv2
+from threading import Lock, Thread
 from PIL import Image
 from flask import Flask
 from io import BytesIO
 #------------- Add library ------------#
-
+import time
 #--------------------------------------#
-
 
 def nothing(x):
    pass
+
+global pre, original_Image, sendBack_angle, sendBack_Speed
+sendBack_angle = 0
+sendBack_Speed = 0
+original_Image = []
+pre = time.time()
+
+lock = Lock()
 
 #initialize our server
 sio = socketio.Server()
@@ -22,7 +30,7 @@ app = Flask(__name__)
 #registering event handler for the server
 @sio.on('telemetry')
 def telemetry(sid, data):
-    global lane_model, speed_model
+    global sendBack_angle, sendBack_Speed, pre, original_Image
     if data:
 
         steering_angle = 0  #Góc lái hiện tại của xe
@@ -35,7 +43,9 @@ def telemetry(sid, data):
         image = Image.open(BytesIO(base64.b64decode(data["image"])))
         image = np.asarray(image)
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        
+        with lock:
+            original_Image = np.copy(image)
+
         """
         - Chương trình đưa cho bạn 3 giá trị đầu vào:
             * steering_angle: góc lái hiện tại của xe
@@ -48,19 +58,11 @@ def telemetry(sid, data):
                 + sendBack_angle (góc điều khiển): [-25, 25]  NOTE: ( âm là góc trái, dương là góc phải)
                 + sendBack_Speed (tốc độ điều khiển): [-150, 150] NOTE: (âm là lùi, dương là tiến)
         """
-        sendBack_angle = 0
-        sendBack_Speed = 0
-        try:
-            #------------------------------------------  Work space  ----------------------------------------------#
-            
 
-            cv2.imshow("result", image)
-            cv2.waitKey(1)
-            #------------------------------------------------------------------------------------------------------#
-            print('{} : {}'.format(sendBack_angle, sendBack_Speed))
-            send_control(sendBack_angle, sendBack_Speed)
-        except Exception as e:
-            print(e)
+        print(1/(time.time() - pre))
+        pre = time.time()
+        send_control(sendBack_angle, sendBack_Speed)
+
     else:
         sio.emit('manual', data={}, skip_sid=True)
 
@@ -80,10 +82,26 @@ def send_control(steering_angle, throttle):
         skip_sid=True)
 
 
-if __name__ == '__main__':
-    
-    #-----------------------------------  Setup  ------------------------------------------#
+def main():
+    global original_Image
+    image =  0
 
+    while True:
+        with lock:
+            image = np.copy(original_Image)
+        try:
+            cv2.imshow("image", image)
+            print(image.shape)
+        except:
+            print("EEE")
+        if cv2.waitKey(1) == 27:
+            break
+
+
+if __name__ == '__main__':
+    #-----------------------------------  Setup  ------------------------------------------#
+    thread_Main = Thread(target=main, args=())
+    thread_Main.start()
     #--------------------------------------------------------------------------------------#
     # wrap Flask application with engineio's middleware
     app = socketio.Middleware(sio, app)
