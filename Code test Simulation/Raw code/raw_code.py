@@ -58,6 +58,7 @@ def telemetry(sid, data):
                 + sendBack_angle (góc điều khiển): [-25, 25]  NOTE: ( âm là góc trái, dương là góc phải)
                 + sendBack_Speed (tốc độ điều khiển): [-150, 150] NOTE: (âm là lùi, dương là tiến)
         """
+        
 
         print(1/(time.time() - pre))
         pre = time.time()
@@ -92,8 +93,8 @@ def main():
         try:
             cv2.imshow("image", image)
             print(image.shape)
-        except:
-            print("EEE")
+        except Exception as e:
+            print(e)
         if cv2.waitKey(1) == 27:
             break
 
