@@ -1,13 +1,12 @@
 # Phần mềm mô phỏng xe tự hành - UIT_CAR_RACING - UNITY
 
-Phầm mềm được sử dụng chính thức trong cuộc thi UIT CAR RACING - 2020
-Thông tin cuộc thi: [here](http://ceday.uit.edu.vn/ceday/uit-car-racing-2020/?fbclid=IwAR09FrAJgNRWWauq4JIuBIAEvBnNb4IIprtKQhE-fD8wNqYuDayKKR4d5Bw)
+Phầm mềm được sử dụng chính thức trong cuộc thi UIT CAR RACING - 2021
+Thông tin cuộc thi: [here](https://ceday.uit.edu.vn/uit-car-racing/)
 
 # Cài đặt phần mềm mô phỏng
 
 Link tải map: [here](https://drive.google.com/drive/folders/1dxIH1mCjbuDAfMuaFIBFVka7kUac-_ce?usp=sharing)
 
-Link hướng dẫn: [here](https://youtu.be/dt8Rj01CxDo?list=PLdDI53OVr0EMUM9bDmiXnFKN1IFDcnI9H) (video này đã cũ, nhưng xem để biết cấu trúc template)
 
 Các bạn tải map về và giải nén sẽ thu đc 2 folder:
 * Folder Windows: dùng cho các bạn sử dụng nền tảng window, chạy file [tên map].exe (vd: 3D_MAP1-V2.exe)
@@ -33,46 +32,38 @@ pip install -r requirements.txt
 
 Sau khi cài đặt các thư viện cần thiết và có code giao tiếp vừa clone từ link git ở trên, ta bắt đầu vào chi tiết code
 
-Cấu trúc Folder:    Code test Simulation|
-
-                        --------------------|My code|
-
-                                                -------|drive.py
-
-                                                -------|model.h5
-
-                                                -------|utils.py
+Cấu trúc Folder:    
+                    Code test Simulation|
 
                         --------------------|Raw code|
                         
-                                                -------|raw_code.py
+                                                -------|client.py
+                                                -------|client4docker.py
 
-* My code: là folder chưa code mẫu của btc làm ví dụ cho các bạn biết cách sử dụng của code và làm sao để giao tiếp với phần mềm mô phỏng
+
+* client.py:
 ```
-python driver.py model.h5
+python client.py
+# Sử dụng để test giải thuật trên máy tính cá nhân
 ```
 
-* Raw code: 
+* client4docker.py:
 ```
-python raw_code.py
+python client4docker.py
+# Sử dụng để chạy trên môi trường docker gửi cho BTC
 ```
-    
+
 Code này chứa mẫu giao tiếp với phần mềm mô phỏng, các đội nên code vào những phần mà đã gợi ý dưới đây
-    + Phần "Add library": Nếu các bạn sử dụng thêm những thư viện khác thì có thể import từ phần này
-
-    + Phần "Work space": Phần này sẽ chưa code xử lý chính của thí sinh, chương trình sẽ trả về những biến dưới đây sau mỗi lần request tới phần mềm mô phòng:
-        - steering_angle: Góc lái hiện tại của xe
-        - speed: Vận tốc hiện tại của xe
-        - image: hình ảnh thu về từ xe
-    + Các bạn dựa vào những biến này để xử lý và đưa ra tốc độ và góc chạy mà xe cần thực hiện. Sau khi đã xử lý xong, các bạn gán góc và tốc độ mong muốn vào 2 biến sau để gửi về phần mềm giả lập:
-        - sendBack_angle (góc điều khiển): [-25, 25]  NOTE: (âm là góc trái, dương là góc phải)
-        - sendBack_Speed (tốc độ điều khiển): [-150, 150] NOTE: (âm là lùi, dương là tiến)
-
-    + Phần Setup: Khi bắt đầu chạy, chương trình sẽ bắt đầu chạy phần Setup này đầu tiên (chạy qua 1 lần), đây là phần mà các bạn setup các thông số trước khi chạy code chính như: Load model, thiết lập các biến cục bộ ...
+    - Chương trình đưa cho bạn 1 giá trị đầu vào:
+            * image: hình ảnh trả về từ xe
+        
+    - Bạn phải dựa vào giá trị đầu vào này để tính toán và gán lại góc lái và tốc độ xe vào 2 biến:
+        * Biến điều khiển: sendBack_angle, sendBack_Speed
+        Trong đó:
+            + sendBack_angle (góc điều khiển): [-25, 25]  NOTE: ( âm là góc trái, dương là góc phải)
+            + sendBack_Speed (tốc độ điều khiển): [-150, 150] NOTE: (âm là lùi, dương là tiến)
 
 # Kết thúc
-
-Trước khi dừng phần mềm mô phỏng, các bạn nên dừng code giao tiếp với nó trước rồi mới tắt để tránh trường hợp phát sinh ra lỗi
 
 ## Chúc các bạn hoàn thành tốt lượt thi của mình
 
@@ -82,4 +73,7 @@ Trước khi dừng phần mềm mô phỏng, các bạn nên dừng code giao t
 
 * **Che Quang Huy** - *Develope and Operation* - [chequanghuy](https://github.com/chequanghuy)
 
+* **Cao Phan Tien Dung** - *Develope and Operation* - 
+
 ## License
+CEEC - UIT

@@ -6,7 +6,6 @@ import time
 import cv2
 import numpy as np
 
-
 # Create a socket object 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 
@@ -18,27 +17,31 @@ s.connect(('127.0.0.1', port))
 
 pre = time.time()
 
-angle = 50
-speed = 100
+sendBack_angle = 0
+sendBack_Speed = 0
 
 try:
-    
     while True:
         # Send data
-        print(angle, speed)
-        message = bytes(f"{angle} {speed}", "utf-8")
+        message = bytes(f"{sendBack_angle} {sendBack_Speed}", "utf-8")
         s.sendall(message)
+        data = s.recv(100000)
+        image = cv2.imdecode(np.frombuffer(data, np.uint8), -1)
+        """
+        - Chương trình đưa cho bạn 1 giá trị đầu vào:
+            * image: hình ảnh trả về từ xe
+        
+        - Bạn phải dựa vào giá trị đầu vào này để tính toán và gán lại góc lái và tốc độ xe vào 2 biến:
+            * Biến điều khiển: sendBack_angle, sendBack_Speed
+            Trong đó:
+                + sendBack_angle (góc điều khiển): [-25, 25]  NOTE: ( âm là góc trái, dương là góc phải)
+                + sendBack_Speed (tốc độ điều khiển): [-150, 150] NOTE: (âm là lùi, dương là tiến)
+        """
 
-        # while amount_received < amount_expected:
-        data = s.recv(60000)
-        # print(data)
-        decoded = cv2.imdecode(np.frombuffer(data, np.uint8), -1)
-        # print(decoded.shape)
-        cv2.imshow("IMG", decoded)
-        key = cv2.waitKey(1)
+        # your process here
 
-        # print(1/(time.time() - pre))
-        pre = time.time()
+        sendBack_angle = 0
+        sendBack_Speed = 0
 
 finally:
     print('closing socket')

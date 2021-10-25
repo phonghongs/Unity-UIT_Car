@@ -18,29 +18,37 @@ s.connect(('host.docker.internal', port))
 
 pre = time.time()
 
-angle = 50
-speed = 100
+sendBack_angle = 0
+sendBack_Speed = 0
 
 try:
     while True:
         # Send data
-        print(angle, speed)
-        message = bytes(f"{angle} {speed}", "utf-8")
+        message = bytes(f"{sendBack_angle} {sendBack_Speed}", "utf-8")
         s.sendall(message)
 
-        data = s.recv(60000)
-        # print(data)
+        data = s.recv(1000000)
         try:
-            decoded = cv2.imdecode(np.frombuffer(data, np.uint8), -1)
-            print(decoded.shape)
+            image = cv2.imdecode(np.frombuffer(data, np.uint8), -1)
         except Exception as er:
             print(er)
             pass
-        # cv2.imshow("IMG", decoded)
-        # key = cv2.waitKey(1)
 
-        print(1/(time.time() - pre))
-        pre = time.time()
+        """
+        - Chương trình đưa cho bạn 1 giá trị đầu vào:
+            * image: hình ảnh trả về từ xe
+        
+        - Bạn phải dựa vào giá trị đầu vào này để tính toán và gán lại góc lái và tốc độ xe vào 2 biến:
+            * Biến điều khiển: sendBack_angle, sendBack_Speed
+            Trong đó:
+                + sendBack_angle (góc điều khiển): [-25, 25]  NOTE: ( âm là góc trái, dương là góc phải)
+                + sendBack_Speed (tốc độ điều khiển): [-150, 150] NOTE: (âm là lùi, dương là tiến)
+        """
+
+        # your process here
+
+        sendBack_angle = 0
+        sendBack_Speed = 0
 
 finally:
     print('closing socket')
