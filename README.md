@@ -5,7 +5,7 @@ Thông tin cuộc thi: [here](https://ceday.uit.edu.vn/uit-car-racing/)
 
 # Cài đặt phần mềm mô phỏng
 
-Link tải map: [here](https://drive.google.com/drive/folders/1dxIH1mCjbuDAfMuaFIBFVka7kUac-_ce?usp=sharing)
+Link tải map: [here](https://docs.google.com/document/d/1JIztv0jW6gy9S0fnttTxwCClVGTxT-Pc6ncCc4tlk8s/edit?usp=sharing)
 
 
 Các bạn tải map về và giải nén sẽ thu đc 2 folder:
