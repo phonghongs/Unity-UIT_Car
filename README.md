@@ -5,7 +5,7 @@ Thông tin cuộc thi: [here](https://ceday.uit.edu.vn/uit-car-racing/)
 
 # Cài đặt phần mềm mô phỏng
 
-Link tải map: [here](https://docs.google.com/document/d/1JIztv0jW6gy9S0fnttTxwCClVGTxT-Pc6ncCc4tlk8s/edit?usp=sharing)
+Link tải map: [here](https://drive.google.com/drive/folders/1350Y92A3aySU2l8iR4XVGO_1EaZfjE5l?usp=sharing)
 
 
 Các bạn tải map về và giải nén sẽ thu đc 2 folder:
@@ -56,6 +56,8 @@ python client4docker.py
 Code này chứa mẫu giao tiếp với phần mềm mô phỏng, các đội nên code vào những phần mà đã gợi ý dưới đây
     - Chương trình đưa cho bạn 1 giá trị đầu vào:
             * image: hình ảnh trả về từ xe
+            * current_speed: vận tốc hiện tại của xe
+            * current_angle: góc bẻ lái hiện tại của xe
         
     - Bạn phải dựa vào giá trị đầu vào này để tính toán và gán lại góc lái và tốc độ xe vào 2 biến:
         * Biến điều khiển: sendBack_angle, sendBack_Speed
@@ -73,7 +75,7 @@ Code này chứa mẫu giao tiếp với phần mềm mô phỏng, các đội n
 
 * **Che Quang Huy** - *Develope and Operation* - [chequanghuy](https://github.com/chequanghuy)
 
-* **Cao Phan Tien Dung** - *Develope and Operation* - 
+* **Cao Phan Tien Dung** - *Develope and Operation* - [dungcnttimd](https://github.com/dungcnttimd)
 
 ## License
 CEEC - UIT
