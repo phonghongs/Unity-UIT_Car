@@ -54,11 +54,12 @@ python client4docker.py
 ```
 
 Code này chứa mẫu giao tiếp với phần mềm mô phỏng, các đội nên code vào những phần mà đã gợi ý dưới đây
+
     - Chương trình đưa cho bạn 1 giá trị đầu vào:
             * image: hình ảnh trả về từ xe
             * current_speed: vận tốc hiện tại của xe
             * current_angle: góc bẻ lái hiện tại của xe
-        
+
     - Bạn phải dựa vào giá trị đầu vào này để tính toán và gán lại góc lái và tốc độ xe vào 2 biến:
         * Biến điều khiển: sendBack_angle, sendBack_Speed
         Trong đó:
