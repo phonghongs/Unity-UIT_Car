@@ -9,9 +9,13 @@ Link tải map: [here](https://drive.google.com/drive/folders/1350Y92A3aySU2l8iR
 
 
 Các bạn tải map về và giải nén sẽ thu đc 2 folder:
+
 * Folder Windows: dùng cho các bạn sử dụng nền tảng window, chạy file [tên map].exe (vd: 3D_MAP1-V2.exe)
+
 * Folder Linux: dùng cho các bạn sử dụng nền tảng Linux (Khuyến nghị: Ubuntu 18.04), chạy file [tên map].x86_64 (vd: Map_1.x86_64)
     + Trước khi chạy file mô phỏng trên linux, các bạn bấm chuột phải vào file thực thi -> Properties -> Permissions -> tick vào ô Execute: Allow executing file as program
+
+* Folder MacOS.app: truy cập và chạy file chứa trong đường dẫn .\MacOS.app\Contents\MacOS
 
 # Cài đặt các thư viện bắt buộc - Python
 
