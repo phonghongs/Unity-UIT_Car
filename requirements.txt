@@ -1,6 +1,6 @@
 flask==1.1.2
 imutils==0.5.4
-opencv-python==4.1.1.26
+opencv-python==4.2.0.32
 opencv-contrib-python==4.1.1.26
 numpy==1.19.1
 matplotlib
