@@ -100,7 +100,7 @@ public class serversocket : MonoBehaviour
     private TcpListener tcp_Listener = null;
     private string remoteIp = "0.0.0.0";
     private int remotePort = 11000;
-    public sceneController camController;
+    public PrometeoCarController camController;
 
     void Start()
     {
@@ -199,6 +199,7 @@ public class serversocket : MonoBehaviour
                             default:
                             break;
                         }
+                        Debug.Log(msg.Length);
                         stream.Write(msg, 0, msg.Length);
                     }
 
