@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ShapeLabel { Cube, Sphere, Capsule };
+public enum ShapeLabel { red, blue, red2 };
 
 public class Shape {
     public ShapeLabel label;
     public GameObject obj;
 }
 
-public class Shapepool : ScriptableObject
+public class VehiclesPool : ScriptableObject
 {
     private GameObject[] perfabs;
     private Dictionary<ShapeLabel, List<Shape>> pools;
     private List<Shape> active;
 
-    public static Shapepool Create(GameObject[] perfabs){
-        var p = ScriptableObject.CreateInstance<Shapepool>();
+    public static VehiclesPool Create(GameObject[] perfabs){
+        var p = ScriptableObject.CreateInstance<VehiclesPool>();
         p.perfabs = perfabs;
         p.pools = new Dictionary<ShapeLabel, List<Shape>>();
         for (int i = 0; i < perfabs.Length; i ++) {
@@ -51,5 +51,4 @@ public class Shapepool : ScriptableObject
         }
         active.Clear();
     }
-
 }

@@ -18,16 +18,19 @@ public class SocketManager : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public GameObject prefab;
-    private PlayerShape[] players;
+    public GameObject[] prefabs;
+    public PlayerShape[] players;
     private bool[] mRunning;
     private Thread[] mThread;
     private TcpListener[] tcp_Listener;
     private int[] remotePort;
+    private VehiclesPool pool;
     public int numPlayer = 3;
 
     void Start()
     {
+        pool = VehiclesPool.Create(prefabs);
+        pool.ReclaimAll();
         IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
         TcpConnectionInformation[] tcpConnInfoArray = ipGlobalProperties.GetActiveTcpConnections();
         // Create Player Port
@@ -60,16 +63,22 @@ public class SocketManager : MonoBehaviour
         mRunning = new bool[numPlayer];
         mThread = new Thread[numPlayer];
         // Create Player instance
-        i = 0;
         players = new PlayerShape[numPlayer];
-        for (i = 0; i < numPlayer; i++) {
-            var obj = Instantiate(prefab, new Vector3(i * 3, i * 3, i * 3), Quaternion.identity);
-            obj.GetComponent<PrometeoCarController>().playerCam.depth = i + 1;
-            players[i] = new PlayerShape(){
-                obj = obj, 
-                controller = obj.GetComponent<PrometeoCarController>()
+
+        for (int ind = 0; ind < numPlayer; ind++){
+            int perfabIndx = UnityEngine.Random.Range(0, prefabs.Length);
+            var shape = pool.Get((ShapeLabel)perfabIndx);
+            var newObj = shape.obj;
+
+            newObj.transform.position = new Vector3(ind * 3, ind * 3, ind * 3);
+            newObj.transform.rotation = Quaternion.identity;
+
+            players[ind] = new PlayerShape(){
+                obj = newObj, 
+                controller = newObj.GetComponent<PrometeoCarController>()
             };
-            RestartServer(i);
+
+            RestartServer(ind);
         }
     }
 
@@ -86,6 +95,15 @@ public class SocketManager : MonoBehaviour
         mRunning[serverIndex] = false;
     }
 
+    public void SetControllerAvtivate(int index){
+        if (index < 0 || index >= numPlayer){
+            return;
+        }
+        for (int i = 0; i < numPlayer; i ++){
+            players[i].controller.controllerActivate = false;
+        }
+        players[index].controller.controllerActivate = true;
+    }
 
     void StartListening(int serverIndex)
     {
@@ -168,4 +186,5 @@ public class SocketManager : MonoBehaviour
             tcp_Listener[serverIndex].Stop();
         }
     }
+
 }
