@@ -1,4 +1,4 @@
-flask==1.1.2
+flask==2.3.2
 imutils==0.5.4
 opencv-python==4.1.1.26
 opencv-contrib-python==4.1.1.26
